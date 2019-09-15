@@ -23,3 +23,15 @@ class HomePageTest(TestCase):
         html_response = response.content.decode('utf8')
         home_page_title = '<title>Arga Ghulam Ahmad - Homepage</title>'
         self.assertIn(home_page_title, html_response)
+
+    def test_the_owner_informations_appears_at_home_page(self):
+        response = self.client.get('/')
+        html_response = response.content.decode('utf8')
+
+        owner_name = "Arga Ghulam Ahmad"
+        owner_id = "1606821601"
+        owner_major = "Ilmu Komputer"
+
+        self.assertIn(owner_name, html_response)
+        self.assertIn(owner_id, html_response)
+        self.assertIn(owner_major, html_response)
