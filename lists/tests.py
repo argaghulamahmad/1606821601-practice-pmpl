@@ -17,3 +17,9 @@ class HomePageTest(TestCase):
         response = home_page(request)
         expected_html = render_to_string('homepage.html')
         self.assertEqual(response.content.decode(), expected_html)
+
+    def test_whether_home_page_title_same_as_intended(self):
+        response = self.client.get('/')
+        html_response = response.content.decode('utf8')
+        home_page_title = '<title>Arga Ghulam Ahmad - Homepage</title>'
+        self.assertIn(home_page_title, html_response)

@@ -17,6 +17,11 @@ class NewVisitorTest(unittest.TestCase):
         # Arga Ghulam Ahmad just implemented a personal homepage. He goes to checkout him personal homepage.
         self.browser.get('http://localhost:8000')
 
+        # He notices the page title mention Arga Ghulam Ahmad's Homepage.
+        home_page_title = 'Arga Ghulam Ahmad - Homepage'
+
+        self.assertIn(home_page_title, self.browser.title)
+
 
 if __name__ == '__main__':
     unittest.main(warnings='ignore')
