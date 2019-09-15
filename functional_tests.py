@@ -10,38 +10,32 @@ class NewVisitorTest(unittest.TestCase):
     def tearDown(self):
         self.browser.quit()
 
-    def test_can_start_a_list_and_retrieve_it_later(self):
+    def test_home_page_whether_satisfies_user_needs(self):
         # These comments are User Story that describes how the app will work from the point of view of the user. Used
         # to structure a functional test.
 
-        # Edith has heard about a cool new online to-do app. She goes
-        # to check out its homepage
+        # Arga Ghulam Ahmad just implemented a personal homepage. He goes to checkout him personal homepage.
         self.browser.get('http://localhost:8000')
 
-        # She notices the page title and header mention to-do lists
-        self.assertIn('To-Do', self.browser.title)
-        self.fail('Finish the test!')
+        # He notices the page title mention Arga Ghulam Ahmad's Homepage.
+        home_page_title = 'Arga Ghulam Ahmad - Homepage'
 
-        # She is invited to enter a to-do item straight away
+        self.assertIn(home_page_title, self.browser.title)
 
-        # She types "Buy peacock feathers" into a text box (Edith's hobby
-        # is tying fly-fishing lures)
+        # He want to check whether the information that displayed on the homepage is correct.
+        owner_full_name = "Arga Ghulam Ahmad"
+        owner_college_major = "Ilmu Komputer"
+        owner_student_id = "1606821601"
 
-        # When she hits enter, the page updates, and now the page lists
-        # "1: Buy peacock feathers" as an item in a to-do list
+        owner_full_name_element = self.browser.find_element_by_id("owner-full-name")
+        owner_college_major_element = self.browser.find_element_by_id("owner-college-major")
+        owner_student_id_element = self.browser.find_element_by_id("owner-student-id")
 
-        # There is still a text box inviting her to add another item. She
-        # enters "Use peacock feathers to make a fly" (Edith is very methodical)
+        self.assertEqual(owner_full_name, owner_full_name_element.text)
+        self.assertEqual(owner_college_major, owner_college_major_element.text)
+        self.assertEqual(owner_student_id, owner_student_id_element.text)
 
-        # The page updates again, and now shows both items on her list
-
-        # Edith wonders whether the site will remember her list. Then she sees
-        # that the site has generated a unique URL for her -- there is some
-        # explanatory text to that effect.
-
-        # She visits that URL - her to-do list is still there.
-
-        # Satisfied, she goes back to sleep
+        # He satisfied and deploy the app to the server.
 
 
 if __name__ == '__main__':
