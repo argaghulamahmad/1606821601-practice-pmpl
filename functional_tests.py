@@ -11,6 +11,9 @@ class NewVisitorTest(unittest.TestCase):
         self.browser.quit()
 
     def test_can_start_a_list_and_retrieve_it_later(self):
+        # These comments are User Story that describes how the app will work from the point of view of the user. Used
+        # to structure a functional test.
+
         # Edith has heard about a cool new online to-do app. She goes
         # to check out its homepage
         self.browser.get('http://localhost:8000')
