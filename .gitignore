@@ -91,3 +91,6 @@ db.sqlite3
 /venv/
 geckodriver.log
 virtualenv
+/chromedriver
+/chromedriver_linux64.zip
+/superlists/static/
