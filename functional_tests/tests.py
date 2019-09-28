@@ -1,22 +1,10 @@
+from django.test import LiveServerTestCase
 from selenium import webdriver
-from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
-import time
-import unittest
-import environ
-
-root = environ.Path(__file__)
-env = environ.Env(DEBUG=(bool, False), )
-environ.Env.read_env('.env')
-
-HEROKU_APP_HOST = env("HEROKU_APP_HOST")
-print("HEROKU_APP_HOST is", HEROKU_APP_HOST)
-
-MAX_WAIT = 5
 
 
-class NewVisitorTest(unittest.TestCase):
+class NewVisitorTest(LiveServerTestCase):
 
     def setUp(self):
         chrome_options = Options()
@@ -25,6 +13,7 @@ class NewVisitorTest(unittest.TestCase):
         chrome_options.add_argument('--headless')
         chrome_options.add_argument('disable-gpu')
         self.browser = webdriver.Chrome('./chromedriver', chrome_options=chrome_options)
+        self.browser.implicitly_wait(3)
         super(NewVisitorTest, self).setUp()
 
     def tearDown(self):
@@ -32,7 +21,7 @@ class NewVisitorTest(unittest.TestCase):
 
     def test_home_page_whether_satisfies_user_needs(self):
         # Arga Ghulam Ahmad just implemented a personal homepage. He goes to checkout him personal homepage.
-        self.browser.get(HEROKU_APP_HOST)
+        self.browser.get(self.live_server_url)
 
         # He notices the page title mention Arga Ghulam Ahmad's Homepage.
         home_page_title = 'Arga Ghulam Ahmad - Homepage - To-Do lists'
@@ -54,23 +43,15 @@ class NewVisitorTest(unittest.TestCase):
 
         # He satisfied and deploy the app to the server.
 
-    def wait_for_row_in_list_table(self, row_text):
-        start_time = time.time()
-        while True:
-            try:
-                table = self.browser.find_element_by_id('id_list_table')
-                rows = table.find_elements_by_tag_name('tr')
-                self.assertIn(row_text, [row.text for row in rows])
-                return
-            except (AssertionError, WebDriverException) as e:
-                if time.time() - start_time > MAX_WAIT:
-                    raise e
-                time.sleep(0.1)
+    def check_for_row_in_list_table(self, row_text):
+        table = self.browser.find_element_by_id('id_list_table')
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertIn(row_text, [row.text for row in rows])
 
     def test_can_start_a_list_and_retrieve_it_later(self):
         # Arga has heard about a cool new online to-do app. He goes
         # to check out its homepage
-        self.browser.get(HEROKU_APP_HOST)
+        self.browser.get(self.live_server_url)
 
         # He notices the page title and header mention to-do lists
         self.assertIn('To-Do', self.browser.title)
@@ -95,7 +76,7 @@ class NewVisitorTest(unittest.TestCase):
         # When He hits enter, the page updates, and now the page lists
         # "1: Buy peacock feathers" as an item in a to-do list table
         inputbox.send_keys(Keys.ENTER)
-        self.wait_for_row_in_list_table('1: Buy peacock feathers')
+        self.check_for_row_in_list_table('1: Buy peacock feathers')
 
         # He want to know what the system's feedback when there is a to-do
         todo_feedback = self.browser.find_element_by_id("todo-feedback")
@@ -109,8 +90,8 @@ class NewVisitorTest(unittest.TestCase):
         inputbox.send_keys(Keys.ENTER)
 
         # The page updates again, and now shows both items on HIm list
-        self.wait_for_row_in_list_table('2: Use peacock feathers to make a fly')
-        self.wait_for_row_in_list_table('1: Buy peacock feathers')
+        self.check_for_row_in_list_table('2: Use peacock feathers to make a fly')
+        self.check_for_row_in_list_table('1: Buy peacock feathers')
 
         # He is invited to enter some to-do items, to check what the system feedback after he input 5 to-do items in
         # total
@@ -129,7 +110,3 @@ class NewVisitorTest(unittest.TestCase):
         # He visits that URL - HIm to-do list is still there.
 
         # Satisfied, He goes back to sleep
-
-
-if __name__ == '__main__':
-    unittest.main(warnings='ignore')
