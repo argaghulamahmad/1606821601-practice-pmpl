@@ -61,3 +61,18 @@ New Design (Exercise 3):
 self.browser.get(self.live_server_url)
 ```
 ---
+### Exercise 4 Story
+#### Correlation between code changes in this exercise with book's chapter 7
+Pada exercise 4, Saya belajar bagaimana bekerja secara incremental dan membuat tes regresi. 
+Bekerja secara incremental mmerupakan cara bekerja yang dianjurkan oleh Test Driven Development.
+Bekerja secara incremental adalah memecah pekerjaan menjadi pekerjaan-pekerjaan kecil yang dapat dikerjakan dengan mudah.
+Selain bekerja secara incremental, Sata juga belajar bagaimana membuat tes regresi. 
+Tes regresi merupakan salah satu jenis tes yang mengonfirmasi bahwa perubahan kode tidak mempengaruhi fitur yang sudah ada.
+Tes regresi menjalankan semua atau sebagian kode yang sudah ada untuk memastikan fungsionalitas yang ada berfungsi dengan baik.
+Pengujian ini dilakukan untuk memastikan bahwa perubahan kode baru seharusnya tidak menyebabkan efek samping pada fungsi yang sudah ada.
+Pengujian ini memastikan bahwa kode yang lama masih bekerja dengan baik setelah ada penambahan kode/perubahan kode.
+
+Pada exercise ini, Kali ini, Saya mengembangkan fitur TODO dengan desain arsitektur baru. 
+Dimana, setiap pengunjung dapat membuat TODO yang berbeda dengan pengunjung yang lainnya. 
+Untuk dapat menerapkan desain baru tersebut. 
+Saya membagi pekerjaan tersebut menjadi pekerjaan-pekerjaan kecil yaitu menyesuaikan model sehingga item dikaitkan dengan daftar yang berbeda, menambahkan URL unik untuk setiap daftar, menambahkan URL untuk membuat daftar baru melalui POST, dan menambahkan URL untuk menambahkan item baru ke daftar yang ada melalui POST.

@@ -1,0 +1,53 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Arga Ghulam Ahmad - Homepage - To-Do lists</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    {% load sass_tags %}
+    <link href="{% sass_src 'scss/list.scss' %}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>Your To-Do list</h1>
+            <h5>Jumlah To-Do: {{ list.item_set.all|length }}</h5>
+            <h6 id="todo-feedback">
+                {% if list.item_set.all|length == 0 %}
+                    Yeahh, tidak ada tugas. Main game ahh.
+                {% elif list.item_set.all|length < 5 %}
+                    Kerjain ahhh, biar cepat kelar.
+                {% elif list.item_set.all|length >= 5 %}
+                    Oh tidakk, kerjaan ku banyak.
+                {% endif %}
+            </h6>
+
+            <form method="POST" action="/lists/{{ list.id }}/add_item">
+                <input name="item_text" id="id_new_item" placeholder="Enter a to-do item"/>
+                {% csrf_token %}
+            </form>
+
+            <table id="id_list_table">
+                {% for item in list.item_set.all %}
+                    <tr>
+                        <td>{{ forloop.counter }}: {{ item.text }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="col">
+            <h1 id="owner-full-name">Arga Ghulam Ahmad</h1>
+            <div>
+                <h2 id="owner-college-major">Ilmu Komputer</h2>
+                <h2 id="owner-student-id">1606821601</h2>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
