@@ -62,7 +62,8 @@ self.browser.get(self.live_server_url)
 ```
 ---
 ### Exercise 4 Story
-#### Correlation between code changes in this exercise with book's chapter 7
+#### Correlation between code changes in this exercise with chapter 7
+##### Regression Test
 Pada exercise 4, Saya belajar bagaimana bekerja secara incremental dan membuat tes regresi. 
 Bekerja secara incremental mmerupakan cara bekerja yang dianjurkan oleh Test Driven Development.
 Bekerja secara incremental adalah memecah pekerjaan menjadi pekerjaan-pekerjaan kecil yang dapat dikerjakan dengan mudah.
@@ -76,3 +77,21 @@ Pada exercise ini, Kali ini, Saya mengembangkan fitur TODO dengan desain arsitek
 Dimana, setiap pengunjung dapat membuat TODO yang berbeda dengan pengunjung yang lainnya. 
 Untuk dapat menerapkan desain baru tersebut. 
 Saya membagi pekerjaan tersebut menjadi pekerjaan-pekerjaan kecil yaitu menyesuaikan model sehingga item dikaitkan dengan daftar yang berbeda, menambahkan URL unik untuk setiap daftar, menambahkan URL untuk membuat daftar baru melalui POST, dan menambahkan URL untuk menambahkan item baru ke daftar yang ada melalui POST.
+##### Prettification
+Sebelum exercise 4, tampilan aplikasi TODO list ini masuh jelek. Pada exercise 4, Saya mulai menata kembali style aplikasi ini, mengintergasikan HTML dengan bootstrap,
+mengonfigurasi static files, menggunakan CSS preprocessor, dan menguji style aplikasi menggunakan functional testing.
+
+Dengan fungsional testing, Saya berhasil menguji tata letak dan gaya aplikasi. Namun, telebih dahulu Saya mempretifikasi aplikasi dengan menggunakan CSS.
+Selain CSS saya juga mencoba SCSS. SCSS merupakan tools yang memungkinkan untuk memprogram CSS dan mengkompilenya menjadi CSS. Untuk mengkompile SCSS menjadi CSS,
+Saya menggunakan file watcher yang disediakan oleh PyCharm. Untuk mempermudah mempretifikasi aplikasi ini, Saya mengunduh bootstrap dan menggunakannya sebagai static files.
+Static files dapat digunakan dengan menjalankan perintah ```python manage.py collectstatic``` terlebih dahulu. Kemudian, menggunakannya di file html dengan keyword ```static```.
+Selain mempretifikasi aplikasi, Saya juga merefactor templates yang sebelumnya tidak modular dan berada pada satu file saja. Sekarang, templates sudah bersifat modular dan reusable.
+Terdapat tiga file html pada templates app list yaitu base, home, dan lists. Pada ketiga file html tersebut, Saya menintegrasikan bootstrap. Dengan bootstrap, Saya dapat menggunakan class ```row```
+dan ```column```. Dengan demikian layout aplikasi ini lebih indah untuk dipandang. Selain ```row``` dan ```column```. Selain row dan column, Saya juga menggunakan 
+jumbotron, table, dan input yang disediakan oleh bootstrap. Walaupun Saya menggunakan bootstrap, Saya juga menulis CSS sendiri, yaitu ```base.css```. Walaupun ```base.css``` Saya tulis ulang sebagai SCSS.
+```base.scss``` Saya gunakan untuk mengubah warna belakang jumbotron menjadi hijau dan warna tulisan menjadi putih.
+
+Kesimpulan yang Saya peroleh setelah mengerjakan exercise 4 adalah programmer tidak harus menulis tes untuk menguji desain dan tata letak.
+Karena desain dan tata letak merupakan konstanta, dan tes ini sering mengalami perubahan. Setidaknya, programmer harus menulis tes minimal sehingga
+desain dan tata letak yang programmer kembangkan berfungsi tanpa menguji apa itu sebenarnya. Usahakan agar programmer dapat dengan bebas membuat perubahan 
+pada desain dan tata letak, tanpa harus kembali dan menyesuaikan tes setiap saat.

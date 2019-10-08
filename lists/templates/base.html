@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Arga Ghulam Ahmad - Homepage - To-Do lists</title>
+    {% load static %}
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'base.css' %}" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3 jumbotron">
+            <div class="text-center">
+                <h1>{% block header_text %}{% endblock %}</h1>
+                <form method="POST" action="{% block form_action %}{% endblock %}">
+                    <input name="item_text" id="id_new_item"
+                           class="form-control input-lg"
+                           placeholder="Enter a to-do item"/>
+                    {% csrf_token %}
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            {% block todo_feedback %}
+            {% endblock %}
+            {% block table %}
+            {% endblock %}
+        </div>
+        <div class="col-md-6 col-md-offset-3">
+            <div class="text-center">
+                <h1 id="owner-full-name">Arga Ghulam Ahmad</h1>
+                <div>
+                    <h2 id="owner-college-major">Ilmu Komputer</h2>
+                    <h2 id="owner-student-id">1606821601</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+
+</html>
