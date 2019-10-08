@@ -9,6 +9,7 @@ Test:
   before_script:
     - pip3 install --upgrade pip
     - pip3 install -r requirements.txt
+    - python3 manage.py collectstatic
   script:
     - python3 manage.py test lists
   tags:
@@ -25,6 +26,7 @@ Deployment:
     - export HEROKU_API_KEY=$HEROKU_APIKEY
     - heroku run --app $HEROKU_APPNAME ./manage.py makemigrations
     - heroku run --app $HEROKU_APPNAME ./manage.py migrate
+    - heroku run --app $HEROKU_APPNAME ./manage.py collectstatic
   environment:
     name: production
     url: $HEROKU_APP_HOST
@@ -41,6 +43,7 @@ TestFunctional:
     - apt-get install -y xvfb
     - wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip
     - unzip chromedriver_linux64.zip
+    - python3 manage.py collectstatic
   when: on_success
   script:
     - python manage.py test functional_tests
