@@ -1,7 +1,7 @@
 stages:
   - test
-  - test_functional
   - deploy
+  - test_functional
 
 Test:
   image: python:3.7

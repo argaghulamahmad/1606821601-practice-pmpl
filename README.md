@@ -95,3 +95,20 @@ Kesimpulan yang Saya peroleh setelah mengerjakan exercise 4 adalah programmer ti
 Karena desain dan tata letak merupakan konstanta, dan tes ini sering mengalami perubahan. Setidaknya, programmer harus menulis tes minimal sehingga
 desain dan tata letak yang programmer kembangkan berfungsi tanpa menguji apa itu sebenarnya. Usahakan agar programmer dapat dengan bebas membuat perubahan 
 pada desain dan tata letak, tanpa harus kembali dan menyesuaikan tes setiap saat.
+---
+### Exercise 5 Story
+#### Relevance between clean code and test driven development
+Pada exercise 5 dan exercise-exercise sebelumnya, Saya sudah menerapkan Test Driven Development dan refactoring. 
+Dalam praktik TDD, kita diwajibkan wajib menuliskan test terlebih dahulu kemudian menulis berkas sumber kode. 
+Dengan demikian kita tidak bingung dalam mengimplementasikan fitur yang akan dikembangkan.
+Tahap-tahap TDD adalah menulis tes yang gagal, menulis minimal working code sehingga test pass, kemudian refactor minimal working code (remove duplication).
+Tujuan utama test driven development (TDD) dan refactoring adalah untuk mencegah (membayar, bila ada) technical debt. 
+Technical debt dapat berupa tidak ada/kurangnya tes otomatis, tidak ada deployment otomatis, tidak ada nya dokumentasi, adanya code smell, software defects, desain yang buruk, dan lain lain. 
+Dengan adanya TDD dan refactoring, jumlah technical debt dapat ditekan atau dihilangkan. Sehingga, kode dapat digolongkan menjadi clean code. 
+Clean code memiliki beberapa karakteristik yaitu tidak mengandung code smell (bersih, jelas, dan tidak mengandung duplikasi) , high cohesion. lulus semua tes, dokumentasi berupa test, dan lebih mudah dan murah untuk dikembangkan.
+#### Advantages applying test organizations
+Kendala yang Saya hadapi pada exercise-exercise sebelumnya adalah semakin sulit untuk menulis test (functional atau unit tests) karena semua tes hanya ditulis dalam satu file saja.
+Oleh karena itu, Saya perlu menerapkan test organizations. Test organizations (bisa disebut juga mengorganisir test) adalah suatu cara untuk membagi test menjadi file test-test yang lebih kecil.
+Seperti yang dapat dilihat pada source code, Saya memecah functional test menjadi ```test_home_page.py,  test_layout_and_styling.py,  test_list_item_validation.py, dan test_simple_list_creation.py```.
+Selain itu, Saya juga memecah unit test app lists menjadi ```test_home_page.py,  test_list_and_item_model.py,  test_list_view.py,  test_new_item.py, dan test_new_list.py```. 
+Dengan demikian, Saya dapat dengan mudah menulis test karena setiap test sudah dibagi dan dibuat modular sesuai dengan fungsionalitas yang ingin diuji.
