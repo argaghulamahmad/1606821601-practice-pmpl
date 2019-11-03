@@ -1,6 +1,6 @@
 from selenium.webdriver.common.keys import Keys
 
-from .prod_base import FunctionalTest
+from .base import FunctionalTest
 
 
 class LayoutAndStylingTest(FunctionalTest):
@@ -14,7 +14,7 @@ class LayoutAndStylingTest(FunctionalTest):
         inputbox = self.browser.find_element_by_id('id_new_item')
         self.assertAlmostEqual(
             inputbox.location['x'] + inputbox.size['width'] / 2,
-            512.5,
+            98.5,
             delta=10
         )
 
@@ -26,6 +26,6 @@ class LayoutAndStylingTest(FunctionalTest):
         inputbox = self.browser.find_element_by_id('id_new_item')
         self.assertAlmostEqual(
             inputbox.location['x'] + inputbox.size['width'] / 2,
-            512.5,
+            98.5,
             delta=10
         )

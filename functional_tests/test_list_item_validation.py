@@ -1,6 +1,6 @@
 from selenium.webdriver.common.keys import Keys
 
-from .prod_base import FunctionalTest
+from .base import FunctionalTest
 
 
 class ItemValidationTest(FunctionalTest):
