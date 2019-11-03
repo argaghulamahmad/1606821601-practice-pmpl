@@ -1,4 +1,4 @@
-from .prod_base import FunctionalTest
+from .base import FunctionalTest
 
 
 class HomepageTest(FunctionalTest):
