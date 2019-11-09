@@ -325,3 +325,13 @@ Saya berhasil membunuh 33 mutant dengan mutation score yang diperoleh adalah 52.
 
 Jadi Saya berhasil merefactor unit test untuk memperbaiki kualitas yang Saya miliki
 berdasarkan hasil penggunaan mutation testing tool django mutpy.
+
+---
+
+### Exercise 7 Story
+#### My Experience on applying spiking and de-spiking technique
+Pada exercise 7 Saya mempelajari teknik bagaimana agar dapat belajar suatu application programming interface dengan bebas tetapi tetap menerapkan test driven development. Teknik tersebut dinamakan dengan spiking dan de-spiking. 
+
+Teknik spiking merupakan suatu teknik untuk mengeksplorasi suatu API tanpa menerapkan test driven development (TDD) dan menulis unit test. Sebagai contoh, Saya belajar bagaimana menggunakan API untuk mengirim email smtp menggunakan library Django mail dan otentikasi menggunakan library Django auth tanpa menerapkan test driven development. Teknik spiking tersebut Saya lakukan dengan membuat branch baru (exercise-7-1) dari branch master, implementasi kode pada exercise-7-1 (tahap spiking), kemudian kembali ke branch master saat de-spiking. Sebelum de-spiking, saya membuat fungsional tes dari hasil implementasi teknik spiking agar dapat digunakan pada tahap de-spiking. Pada tahap de-spiking, Saya kembali ke branch master dan membuat branch baru (exercise-7-2), kemudian Saya membuang kode yang dibuat pada tahap spiking dan mengimplementasikan fitur dari awal lagi dengan menerapkan test driven development.
+
+Keuntungan yang Saya peroleh dengan menggunakan teknik spiking dan de-spiking adalah Saya dapat membuat fungsional test pada teknik spiking yang mana fungsional test tersebut dapat dijadikan acuan pada teknik de-spiking. Dengan demikian, pada proses implementasi di tahap de-spiking Saya dapat fokus menulis unit test dan implementasi kode yang lebih baik, efektif dan efisien daripada kode yang ditulis pada tahap spiking.

@@ -13,7 +13,7 @@
 
 <body>
 <div class="container">
-    <div class="navbar">
+    {% comment %}<div class="navbar">
         {% if user.is_authenticated %}
             <p>Logged in as {{ user.email }}</p>
             <p><a id="id_logout" href="{% url 'logout' %}">Log out</a></p>
@@ -23,7 +23,7 @@
                 {% csrf_token %}
             </form>
         {% endif %}
-    </div>
+    </div>{% endcomment %}
 
     <div class="row">
         <div class="col-md-6 col-md-offset-3 jumbotron">
