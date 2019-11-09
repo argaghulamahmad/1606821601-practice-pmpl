@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 
 import dj_database_url
+import environ
 import psycopg2
 
 # Set project directory and static root
@@ -30,7 +31,7 @@ SECRET_KEY = '!q8!kwzs)xj20c3f6ga42m=!e0)h4lm^6^$7%b$q)@(qk!%**@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['pmpl-arga.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = ['pmpl-arga.herokuapp.com', 'localhost', '127.0.0.1']
 
 # Application definition
 
@@ -42,7 +43,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_mutpy',
+    'accounts',
     'lists'
+]
+
+# Authentication Configuration
+
+AUTH_USER_MODEL = 'accounts.ListUser'
+AUTHENTICATION_BACKENDS = [
+    'accounts.authentication.PasswordlessAuthenticationBackend',
 ]
 
 MIDDLEWARE = [
@@ -137,3 +146,29 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
+
+# Email Server Configuration
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'dev.argaghulamahmad@gmail.com'
+EMAIL_HOST_PASSWORD = os.environ.get('DEV_EMAIL_PASSWORD')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+# Logging Configuration
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+        },
+    },
+    'root': {'level': 'INFO'},
+}
