@@ -345,3 +345,65 @@ Mocking merupakan aktivitas mensimulasikan objek dengan meniru perilaku objek ny
 Karena bahasa pemrograman python merupakan bahasa pemrograman dinamis. Kita dapat memanfaatkan sifat dinamisnya untuk melakukan mocking secara manual. Yang dimaksud dengan mocking manual adalah mereplace fungsi yang ingin di-mock menggunakan fungsi baru palsu. Fungsi baru palsu ini dibuat dengan membuat variabel mocking di dalam fungsi tersebut. Fungsi tersebut akan berperilaku seperti mutable objek yang berisi daftar variabel, dimana bila ada perubahan input variabel maka isi daftar variable juga berubah.
 
 Namun, melakukan mocking manual membutuhkan upaya yang cukup banyak. Oleh karena itu, Kita dapat memanfaatkan library mocking python yaitu `unittest.mock`. Library ini dapat melakukan mocking pemanggilan fungsi atau atribut apapun. Dimana, nilainya dapat dikonfigurasikan secara spesifik. Untuk memocking suatu object kita tinggal menambahkan decorator function yaitu `patch`. Dimana kita dapat mengotomatisasikan mocking manual dengan menggunakan  decorator function ini.
+#### Why mocking can make the implementation that we make tightly coupled
+Walaupun, mocking membantu pengembang perangkat lunak untuk menguji dependencies, mocking dapat membuat implementasi yang kita buat tightly coupled. Terlebih apabila kita menguji detail implementasi dibandingkan perilaku. Sebagai contoh fungsi unit test `test_adds_success_message`:
+```python
+def test_adds_success_message(self):
+    response = self.client.post('/accounts/send_login_email', data={
+        'email': 'edith@example.com'
+    }, follow=True)
+
+    message = list(response.context['messages'])[0]
+    self.assertEqual(
+        message.message,
+        "Check your email, we've sent you a link you can use to log in."
+    )
+    self.assertEqual(message.tags, "success")
+```
+Apa yang terjadi pada `accounts/views.py` apabila kita menguji fungsionalitas menambahkan pesan sukses dengan mocking? Kita dapat me-mock modul `messages` dan mengecek atribut success pada messages dengan parameter `request` asli, dan pesan yang kita inginkan. Kurang lebih seperti ini nantinya:
+```python
+from django.contrib import messages
+from django.core.mail import send_mail
+from django.shortcuts import redirect
+from django.urls import reverse
+
+from accounts.models import Token
+
+def send_login_email(request):
+    email = request.POST['email']
+    token = Token.objects.create(email=email)
+    url = request.build_absolute_uri(
+        reverse('login') + '?token=' + str(token.uid)
+    )
+    message_body = f'Use this link to log in:\n\n{url}'
+    send_mail(
+        'Your login link for Superlists',
+        message_body,
+        'noreply@superlists',
+        [email]
+    )
+    messages.add_message(
+        request,
+        messages.SUCCESS,
+        "Check your email, we've sent you a link you can use to log in."
+    )
+    return redirect('/')
+```
+Bila diperhatikan, ada sesuatu implementasi yang berbeda dari implementasi `accounts/views.py` (mocking) yang Saya terapkan yaitu
+```python
+messages.add_message(
+    request,
+    messages.SUCCESS,
+    "Check your email, we've sent you a link you can use to log in."
+)
+```
+Padahal implementasi tersebut dapat dicapai dengan source code (non mocking) berikut
+```python
+messages.success(
+    request,
+    "Check your email, we've sent you a link you can use to log in."
+)
+```
+Apabila kita mengeksekusi unit test. Tes mock akan berhasil, tetapi tidak dengan tes non mock. Tes non mock akan gagal. Meskipun hasil akhirnya sama, implementasi benar, dan unit test non mock rusak.
+
+Inilah akibat apabila kita tidak berhati-hati dalam memutuskan apakah suatu fungsionalitas harus diuji menggunakan mocking atau tidak. Apabila kita salah memutuskan apakah mocking diperlukan untuk menguji suatu fungsionalitas, implementasi yang kita buat tightly coupled dengan unit test yang dibuat. Masalah ini merupakan hal yang harus dihindari. Oleh karena itu, Kita harus bijak dalam memilih apakah suatu fungsionalitas harus diuji menggunakan mocking atau tidak.
