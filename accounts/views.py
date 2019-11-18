@@ -1,5 +1,6 @@
 from django.contrib import messages, auth
 from django.core.mail import send_mail
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse
 
@@ -31,3 +32,8 @@ def login(request):
     if user:
         auth.login(request, user)
     return redirect('/')
+
+
+def logout(request):
+    auth.logout(request)
+    return HttpResponseRedirect('/')
