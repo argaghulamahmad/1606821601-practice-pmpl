@@ -13,7 +13,7 @@
 
 <body>
 <div class="container">
-    {% comment %}<div class="navbar">
+    <div class="navbar">
         {% if user.is_authenticated %}
             <p>Logged in as {{ user.email }}</p>
             <p><a id="id_logout" href="{% url 'logout' %}">Log out</a></p>
@@ -23,7 +23,21 @@
                 {% csrf_token %}
             </form>
         {% endif %}
-    </div>{% endcomment %}
+    </div>
+
+    {% if messages %}
+        <div class="row">
+            <div class="col-md-8">
+                {% for message in messages %}
+                    {% if message.level_tag == 'success' %}
+                        <div class="alert alert-success">{{ message }}</div>
+                    {% else %}
+                        <div class="alert alert-warning">{{ message }}</div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
 
     <div class="row">
         <div class="col-md-6 col-md-offset-3 jumbotron">
