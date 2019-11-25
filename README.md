@@ -407,3 +407,35 @@ messages.success(
 Apabila kita mengeksekusi unit test. Tes mock akan berhasil, tetapi tidak dengan tes non mock. Tes non mock akan gagal. Meskipun hasil akhirnya sama, implementasi benar, dan unit test non mock rusak.
 
 Inilah akibat apabila kita tidak berhati-hati dalam memutuskan apakah suatu fungsionalitas harus diuji menggunakan mocking atau tidak. Apabila kita salah memutuskan apakah mocking diperlukan untuk menguji suatu fungsionalitas, implementasi yang kita buat tightly coupled dengan unit test yang dibuat. Masalah ini merupakan hal yang harus dihindari. Oleh karena itu, Kita harus bijak dalam memilih apakah suatu fungsionalitas harus diuji menggunakan mocking atau tidak.
+
+---
+
+### Exercise 9 Story
+#### Differences between functional implementation between sub bab 20.1 with sub bab 18.3
+Pada functional test subbab 20.1, Saya menulis sebuah fungsi di file test_my_lists.py yang digunakan untuk men-skip semua proses login pada saat melakukan pengujian fungsional. Fungsi tersebut bernama create_pre_authenticated_session. 
+
+```python
+class MyListsTest(FunctionalTest):
+
+    def create_pre_authenticated_session(self, email):
+        user = User.objects.create(email=email)
+        session = SessionStore()
+        session[SESSION_KEY] = user.pk
+        session[BACKEND_SESSION_KEY] = settings.AUTHENTICATION_BACKENDS[0]
+        session.save()
+
+        # to set a cookie we need to first visit the domain.
+        # 404 pages load the quickest!
+
+        self.browser.get(self.live_server_url + "/404_no_such_url/")
+        self.browser.add_cookie(dict(
+            name=settings.SESSION_COOKIE_NAME,
+            value=session.session_key,
+            path='/',
+        ))
+```
+
+Cara kerja fungsi ini adalah membuat ulang session object pada database testing. Session object berisi session key yang merupakan primary key dari objek user. Kemudian, fungsi tersebut menambahkan cookie ke browser. Dengan cookie tersebut, browser akan menyimpan informasi bahwa proses functional test ini merupakan pengguna yang sudah login. Oleh karena itu, fungsi ini memungkinkan proses login functional test dilakukan hanya sekali saja untuk semua test. Berbeda dengan functional test subbab 18.3 yang melakukan proses login pada setiap test.
+### Why sub bab 20.1 login functional test implementation is better than sub bab 18.3 login functional test implementation?
+Dengan implementasi subbab 20.1 functional test untuk fitur login yaitu proses login functional test dilakukan hanya sekali saja untuk semua test, diperoleh keuntungan yaitu menghemat waktu yang diperlukan untuk menjalankan proses functional test. Berbanding terbalik dengan, subbab 18.3 yang menghabiskan banyak waktu untuk setiap test untuk proses login saja.
+
