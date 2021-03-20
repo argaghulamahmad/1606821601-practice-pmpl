@@ -7,7 +7,7 @@ django-environ==0.4.4
 django-mutpy==0.1.2
 django-sass-processor==0.7.3
 gunicorn==19.9.0
-Jinja2==2.10.3
+Jinja2==2.11.3
 libsass==0.19.3
 MarkupSafe==1.1.1
 MutPy==0.6.0
