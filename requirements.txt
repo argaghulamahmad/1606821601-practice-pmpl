@@ -1,6 +1,6 @@
 astmonkey==0.3.6
 dj-database-url==0.5.0
-Django==2.2.5
+Django==2.2.20
 django-appconf==1.0.3
 django-compressor==2.3
 django-environ==0.4.4
